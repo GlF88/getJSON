@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta charset="UTF-8">
+
+<head>
+<title>jQuery ajax getJSON method example</title>
+<style>
+body{
+  background: #fff;
+  color: #555;
+  font-size: 12px;
+  font-family: "Ubuntu",sans-serif;
+}
+h1 {margin-bottom:20px;}
+.main{
+background: #eee none repeat scroll 0 0;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 10px 150px 30px;
+    text-align: center;
+    width: 680px;
+}
+table.info {
+border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+	margin-bottom: 20px;
+}
+table.info td {
+border: 1px solid #999;
+    padding: 3px 9px;
+	width: 33%;
+}
+table.info td input {
+border: 1px solid #999;
+    padding: 3px 9px;
+	width: 33%;
+}
+.butt_write {
+margin-bottom:20px;
+}
+
+.block{
+  width: 100px;
+  height: 100px;
+}
+</style>
+<link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript" language="javascript">
+   
+   $(function() {
+
+  $.getJSON("parametr2.json", setValues);
+
+
+
+  $("button.butt_write").click(function() {
+    $.ajax({
+      type: "POST",
+      url: "response2.php",
+      data: "one_new=" + $(".one_new input").val() +
+            "&two_new=" + $(".two_new input").val() +
+            "&three_new=" + $(".three_new input").val(),
+      dataType: "json",
+      success: setValues
+    });
+  });
+
+
+
+  function setValues(data) {
+    $("body").append("<div class='block' id='id1'> </div>");
+    $("body").append("<div class='block' id='id2'> </div>");
+    $("body").append("<div class='block' id='id3'> </div>");
+    $("#id1").html(data.one);
+    $("#id2").html(data.two);
+    $("#id3").html(data.three); 
+
+    $("td.one_new input").val(data.one);
+    $("td.two_new input").val(data.two);
+    $("td.three_new input").val(data.three);
+  }
+
+});
+</script>
+</head>
+<body>
+<div class="main">
+	<h1>jQuery ajax getJSON method example</h1>
+	
+	<table class="info">
+		<tr><td>one:</td><td class="one"></td><td class="one_new"><input type="text" /></td></tr>
+		<tr><td>two:</td><td class="two"></td><td class="two_new"><input type="text" /></td></tr>
+		<tr><td>three:</td><td class="three"></td><td class="three_new"><input type="text" /></td></tr>
+	</table>
+	
+	<button class="butt_write">записать файл</button>
+
+	
+</div>
+</body>
+</html>
